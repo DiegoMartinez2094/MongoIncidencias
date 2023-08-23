@@ -1,0 +1,93 @@
+use("Incidencias");
+
+db.trainer.insertMany([
+  {
+    Id_trainer: 1,
+    nombre_trainer: "Miguel",
+    Emails: {Email_personal: "entrenador1@example.com",Email_corporativo: "entrenador1@empresa.com"},
+    telefonos: {telefono_movil: "1234567890",telefono_residencia: "9876543210",telefono_empresa: "5555555555",telefono_mobil_empresa: "6666666666"}
+  },
+  {
+    Id_trainer: 2,
+    nombre_trainer: "Carlos",
+    Emails: {Email_personal: "entrenador2@example.com",Email_corporativo: "entrenador2@empresa.com"},
+    telefonos: {telefono_movil: "01245525",telefono_residencia: "1541254",telefono_empresa: "21545656",telefono_mobil_empresa: "562454"}
+  },
+  {
+    Id_trainer: 3,
+    nombre_trainer: "Jolver",
+    Emails: {Email_personal: "entrenador3@example.com",Email_corporativo: "entrenador3@empresa.com"},
+    telefonos: {telefono_movil: "4545",telefono_residencia: "15415445254",telefono_empresa: "2154452455656",telefono_mobil_empresa: "562441254"}
+  },
+  {
+    Id_trainer: 4,
+    nombre_trainer: "Vermen",
+    Emails: {Email_personal: "entrenador3@example.com",Email_corporativo: "entrenador3@empresa.com"},
+    telefonos: {telefono_movil: "01245524455",telefono_residencia: "15414254",telefono_empresa: "2154565686",telefono_mobil_empresa: "562454454"}
+  },
+  {
+    Id_trainer: 5,
+    nombre_trainer: "Luisa",
+    Emails: {Email_personal: "entrenador4@example.com",Email_corporativo: "entrenador4@empresa.com"},
+    telefonos: {telefono_movil: "7894561230",telefono_residencia: "9871234560",telefono_empresa: "5551231234",telefono_mobil_empresa: "6667897890"}
+  }
+]);
+
+
+db.incidencia.insertMany([
+  {
+    Id_incidencia: 1,
+    tipo_incidencia: "leve",
+    area: "training",
+    lugar:"Apolo",
+    fecha: ISODate("2023-08-25"),
+    categoria:"hardware",
+    equipo: {Id_Equipo: 25564125,tipo_Equipo: "teclado"},
+    descripcion_incidencia: "Daño en el cable",
+    reportó_trainer: "Miguel"
+  },
+  {
+    Id_incidencia: 2,
+    tipo_incidencia: "moderada",
+    area: "review",
+    lugar:"Corvus",
+    fecha: ISODate("2023-08-26"),
+    categoria:"software",
+    equipo: {Id_Equipo: 25564126,tipo_Equipo: "mouse"},
+    descripcion_incidencia: "Problema de conexión",
+    reportó_trainer: "Carlos"
+  },
+  {
+    Id_incidencia: 3,
+    tipo_incidencia: "critica",
+    area:"training",
+    lugar:"Artemis",
+    fecha: ISODate("2023-08-27"),
+    categoria:"software",
+    equipo: {Id_Equipo: 25564127,tipo_Equipo: "computadorCPU"},
+    descripcion_incidencia: "Pantalla en negro",
+    reportó_trainer: "Jolver"
+  },
+  {
+    Id_incidencia: 4,
+    tipo_incidencia: "leve",
+    area:"review",
+    lugar:"Endor",
+    fecha: ISODate("2023-08-28"),
+    categoria:"software",
+    equipo: {Id_Equipo: 25564128,tipo_Equipo: "diademas"},
+    descripcion_incidencia: "Problema de audio",
+    reportó_trainer: "Luisa"
+  },
+  {
+    Id_incidencia: 5,
+    tipo_incidencia: "moderada",
+    area: "review",
+    lugar:"Corvus",
+    fecha: ISODate("2023-08-29"),
+    categoria:"hardware",
+    equipo: {Id_Equipo: 25564129,tipo_Equipo: "teclado"},
+    descripcion_incidencia: "Teclas atascadas",
+    reportó_trainer: "Carlos"
+  }
+]);
