@@ -1,10 +1,13 @@
 import { con } from "../../db/atlas.js";
 import { Router } from "express";
+import { limitGrt } from "../../limit/config.js";
 
 const trainer = Router();
 const db = await con();
 
-trainer.get("/", async (req, res) => {
+trainer.get("/",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     try {
         const trainers = db.collection("trainer");
         const result = await trainers.find({}).toArray();

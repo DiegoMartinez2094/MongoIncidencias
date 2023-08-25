@@ -1,12 +1,14 @@
 import { con } from "../../db/atlas.js";
 import { Router } from "express";
-import trainer from "../v1/trainer.js";
+import { limitGrt } from "../../limit/config.js";
 
 const trainer2 = Router();
 const db = await con();
 const trainers = db.collection("trainer");
 
-trainer2.get("/:Id_trainer?", async (req, res) => {
+trainer2.get("/:Id_trainer?",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     try {
         if (req.params.Id_trainer) {  // Verificar si se proporcionó el parámetro Id_trainer en la URL
             const trainerId = parseInt(req.params.Id_trainer);
@@ -27,7 +29,9 @@ trainer2.get("/:Id_trainer?", async (req, res) => {
     }
 });
 
-trainer2.post("/", async(req, res) => {
+trainer2.post("/",limitGrt(), async(req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
 let resul;
 try { 
     resul = await trainers.insertOne(req.body);
@@ -39,7 +43,9 @@ try {
 });     
 
 
-trainer2.put("/:Id_trainer", async (req, res) => {
+trainer2.put("/:Id_trainer",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     try {
         const trainerId = parseInt(req.params.Id_trainer);
         const updatedTrainer = req.body; 
@@ -55,7 +61,9 @@ trainer2.put("/:Id_trainer", async (req, res) => {
     }
 });
 
-trainer2.delete("/:Id_trainer", async (req, res) => {
+trainer2.delete("/:Id_trainer",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     try {
         const trainerId = parseInt(req.params.Id_trainer);
         const result = await trainers.deleteOne({ Id_trainer: trainerId });

@@ -1,12 +1,16 @@
 import { con } from "../../db/atlas.js";
 import { Router } from "express";
+import { limitGrt } from "../../limit/config.js";
 
 const incidencia2 = Router();
 const db = await con();
+const incidencias = db.collection("incidencia");
 
-incidencia2.get("/:Id_incidencia?", async (req, res) => {
+incidencia2.get("/:Id_incidencia?",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     try {
-        const incidencias = db.collection("incidencia");
+       
         if (req.params.Id_incidencia) {  // Verificar si se proporcionó el parámetro Id_incidencia en la URL
             const incidenciaId = parseInt(req.params.Id_incidencia);
             const result = await incidencias.findOne({ Id_incidencia: incidenciaId });
@@ -22,6 +26,55 @@ incidencia2.get("/:Id_incidencia?", async (req, res) => {
         }
     } catch (error) {
         console.error("Error al obtener las incidencias:", error);
+        res.status(500).send("Error interno del servidor");
+    }
+});
+
+
+incidencia2.post("/",limitGrt(), async(req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
+let resul;
+try { 
+    resul = await incidencias.insertOne(req.body);
+    res.status(201).send(resul);
+} catch (error) {
+    console.log(error);
+    res.send();
+}
+});    
+
+incidencia2.put("/:Id_incidencia",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
+    try {
+        const incidenciaID = parseInt(req.params.Id_incidencia);
+        const updatedIncidencia = req.body; 
+        const result = await incidencias.updateOne({ Id_incidencia: incidenciaID }, { $set: updatedIncidencia });
+        if (result.matchedCount === 0) {
+            res.status(404).send("incidencia no encontrada");
+        } else {
+            res.status(200).send("incidencia actualizada correctamente");
+        }
+    } catch (error) {
+        console.error("Error al actualizar la incidencia:", error);
+        res.status(500).send("Error interno del servidor");
+    }
+});
+
+incidencia2.delete("/:Id_incidencia",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
+    try {
+        const incidenciaId = parseInt(req.params.Id_incidencia);
+        const result = await incidencias.deleteOne({ Id_incidencia: incidenciaId });
+        if (result.deletedCount === 0) {
+            res.status(404).send("incidencia no encontrado");
+        } else {
+            res.status(200).send("incidencia eliminada correctamente");
+        }
+    } catch (error) {
+        console.error("Error al eliminar la incidencia:", error);
         res.status(500).send("Error interno del servidor");
     }
 });
