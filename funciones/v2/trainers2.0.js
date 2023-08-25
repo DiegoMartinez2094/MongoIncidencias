@@ -4,22 +4,26 @@ import { Router } from "express";
 const trainer2 = Router();
 const db = await con();
 
-trainer2.get("/:Id_trainer", async (req, res) => {
+trainer2.get("/:Id_trainer?", async (req, res) => {
     try {
         const trainers = db.collection("trainer");
-        const trainerId = parseInt(req.params.Id_trainer);
-        const result = await trainers.findOne({ Id_trainer: trainerId });
+        if (req.params.Id_trainer) {  // Verificar si se proporcionó el parámetro Id_trainer en la URL
+            const trainerId = parseInt(req.params.Id_trainer);
+            const result = await trainers.findOne({ Id_trainer: trainerId });
 
-        if (result) {
-            res.send(result);
+            if (result) {
+                res.send(result);
+            } else {
+                res.status(404).send("Trainer no encontrado");
+            }
         } else {
-            res.status(404).send("Trainer no encontrado");
+            const allTrainers = await trainers.find().toArray();  // Manejar el caso en que no se proporciona el parámetro
+            res.send(allTrainers);
         }
     } catch (error) {
-        console.error("Error al obtener el trainer:", error);
+        console.error("Error al obtener los trainers:", error);
         res.status(500).send("Error interno del servidor");
     }
 });
-
 
 export default trainer2;
