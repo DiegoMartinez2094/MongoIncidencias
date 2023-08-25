@@ -1,4 +1,4 @@
-import { con } from "../db/atlas.js";
+import { con } from "../../db/atlas.js";
 import { Router } from "express";
 
 const trainer = Router();

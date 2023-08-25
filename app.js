@@ -2,8 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv'
 import versionRoutes from 'express-routes-versioning';
 
-import trainer from "./funciones/trainer.js";
-import trainer2 from "./funciones/trainers2.0.js";
+import trainer from "./funciones/v1/trainer.js";
+import trainer2 from "./funciones/v2/trainers2.0.js";
 dotenv.config();
 let app = express(); 
 
