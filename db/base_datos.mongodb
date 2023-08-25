@@ -1,5 +1,46 @@
 use("Incidencias");
 
+db.createCollection("trainer", {
+  validator: {
+      $jsonSchema: {
+          bsonType: "object",
+          required: [
+              "Id_trainer",
+              "nombre_trainer",
+              "Emails",
+              "telefonos"
+          ],
+          properties: {
+              Id_trainer: { bsonType: "int" },
+              nombre_trainer: { bsonType: "string", maxLength: 50 },
+              Emails: {
+                  bsonType: "object",
+                  required: ["Email_personal", "Email_corporativo"],
+                  properties: {
+                      Email_personal: { bsonType: "string" },
+                      Email_corporativo: { bsonType: "string" }
+                  }
+              },
+              telefonos: {
+                  bsonType: "object",
+                  required: [
+                      "telefono_movil",
+                      "telefono_residencia",
+                      "telefono_empresa",
+                      "telefono_mobil_empresa"
+                  ],
+                  properties: {
+                      telefono_movil: { bsonType: "string" },
+                      telefono_residencia: { bsonType: "string" },
+                      telefono_empresa: { bsonType: "string" },
+                      telefono_mobil_empresa: { bsonType: "string" }
+                  }
+              }
+          }
+      }
+  }
+});
+
 db.trainer.insertMany([
   {
     Id_trainer: 1,
@@ -33,6 +74,42 @@ db.trainer.insertMany([
   }
 ]);
 
+db.createCollection("incidencia", {
+  validator: {
+      $jsonSchema: {
+          bsonType: "object",
+          required: [
+              "Id_incidencia",
+              "tipo_incidencia",
+              "area",
+              "lugar",
+              "fecha",
+              "categoria",
+              "equipo",
+              "descripcion_incidencia",
+              "reportó_trainer"
+          ],
+          properties: {
+              Id_incidencia: { bsonType: "int" },
+              tipo_incidencia: { bsonType: "string", enum: ["leve", "moderada", "critica"] },
+              area: { bsonType: "string" },
+              lugar: { bsonType: "string" },
+              fecha: { bsonType: "date" },
+              categoria: { bsonType: "string" },
+              equipo: {
+                  bsonType: "object",
+                  required: ["Id_Equipo", "tipo_Equipo"],
+                  properties: {
+                      Id_Equipo: { bsonType: "int" },
+                      tipo_Equipo: { bsonType: "string" }
+                  }
+              },
+              descripcion_incidencia: { bsonType: "string" },
+              reportó_trainer: { bsonType: "string" }
+          }
+      }
+  }
+});
 
 db.incidencia.insertMany([
   {
