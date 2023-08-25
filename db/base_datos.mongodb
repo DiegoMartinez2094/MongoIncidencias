@@ -168,3 +168,16 @@ db.incidencia.insertMany([
     reportó_trainer: "Carlos"
   }
 ]);
+
+db.rol.insertMany([
+  {
+    Id_rol:1,
+    nombre_rol: "administrador",
+    acceso_rol: ["incidencia", "trainer", "rol"]
+  },
+  {
+    Id_rol:2,
+    nombre_rol: "trainer",
+    acceso_rol: ["incidencia"]
+  }
+]);
