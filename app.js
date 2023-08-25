@@ -4,6 +4,9 @@ import versionRoutes from 'express-routes-versioning';
 
 import trainer from "./funciones/v1/trainer.js";
 import trainer2 from "./funciones/v2/trainers2.0.js";
+import incidencia from './funciones/v1/incidencia.js';
+import incidencia2 from './funciones/v2/incidencia2.js';
+
 dotenv.config();
 let app = express(); 
 
@@ -26,3 +29,7 @@ app.use((req, res, next) => {
  }));
 
  
+ app.use('/incidencia', versionRoute({
+    "1.0.0": incidencia,
+    "2.0.0": incidencia2
+ }));
