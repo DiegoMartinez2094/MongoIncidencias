@@ -2,6 +2,7 @@ import { con } from "../../db/atlas.js";
 import { Router } from "express";
 import { limitGrt } from "../../limit/config.js";
 import { validarToken } from '../../middlewares/middlewareJWT.js';
+import { validationResult } from "express-validator";
 
 
 const trainer2 = Router();
@@ -34,6 +35,8 @@ trainer2.get("/trainer/:Id_trainer?",validarToken,limitGrt(), async (req, res) =
 trainer2.post("/trainer",validarToken,limitGrt(), async(req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
+    const {errors} = validationResult(req)
+    res.status(200).json(errors);
 let resul;
 try { 
     resul = await trainers.insertOne(req.body);
@@ -47,6 +50,8 @@ try {
 trainer2.put("/trainer/:Id_trainer",validarToken,limitGrt(), async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
+    const {errors} = validationResult(req)
+    res.status(200).json(errors);
     try {
         const trainerId = parseInt(req.params.Id_trainer);
         const updatedTrainer = req.body; 

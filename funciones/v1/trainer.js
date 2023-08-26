@@ -4,6 +4,7 @@ import { limitGrt } from "../../limit/config.js";
 import { validarToken } from '../../middlewares/middlewareJWT.js';
 
 
+
 const trainer = Router();
 const db = await con();
 

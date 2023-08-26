@@ -2,6 +2,7 @@ import { con } from "../../db/atlas.js";
 import { Router } from "express";
 import { limitGrt } from "../../limit/config.js";
 import { validarToken } from '../../middlewares/middlewareJWT.js';
+import { validationResult } from "express-validator";
 
 
 const incidencia2 = Router();
@@ -32,10 +33,11 @@ incidencia2.get("/incidencia/:Id_incidencia?",validarToken,limitGrt(), async (re
     }
 });
 
-
 incidencia2.post("/incidencia/",validarToken,limitGrt(), async(req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
+    const {errors} = validationResult(req)
+    res.status(200).json(errors);
 let resul;
 try { 
     resul = await incidencias.insertOne(req.body);
@@ -46,9 +48,11 @@ try {
 }
 });    
 
-incidencia2.put("/incidencia//:Id_incidencia",validarToken,limitGrt(), async (req, res) => {
+incidencia2.put("/incidencia/:Id_incidencia",validarToken,limitGrt(), async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
+    const {errors} = validationResult(req)
+    res.status(200).json(errors);
     try {
         const incidenciaID = parseInt(req.params.Id_incidencia);
         const updatedIncidencia = req.body; 
@@ -80,7 +84,5 @@ incidencia2.delete("/incidencia//:Id_incidencia",validarToken,limitGrt(), async 
         res.status(500).send("Error interno del servidor");
     }
 });
-
-
 
 export default incidencia2;
