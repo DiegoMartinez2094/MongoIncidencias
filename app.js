@@ -56,11 +56,11 @@ app.use((req, res, next) => {
  .notEmpty().withMessage('el nombre_trainer es obligatorio')
  .isString().withMessage('el nombre_trainer debe ser string')],
 
- [check("Email_corporativo")
+ [check("Emails.Email_corporativo")
  .notEmpty().withMessage('el Email_corporativo es obligatorio')
  .isString().withMessage('el Email_corporativo debe ser string')],
 
- [check("telefono_movil")
+ [check("telefonos.telefono_movil")
  .notEmpty().withMessage('el telefono_movil es obligatorio')
  .isString().withMessage('el telefono_movil debe ser string')],
 
